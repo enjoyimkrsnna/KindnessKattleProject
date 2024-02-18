@@ -1,24 +1,39 @@
-name: Flyway Migration
-
+name: flyway
+ 
 on:
   push:
-    branches:
+    branches: 
       - main
-
+ 
 jobs:
-  build:
-    runs-on: windows-latest
-
+  deploy:
+    runs-on: ubuntu-latest
+ 
+    env:
+      FLYWAY_USER: ${{ secrets.DB_BUILD_USERNAME }}
+      FLYWAY_PASSWORD: ${{ secrets.DB_BUILD_PASSWORD }}
+      FLYWAY_URL: ${{ secrets.DB_BUILD_URL }}
+      FLYWAY_CLEAN_DISABLED: false
+      FLYWAY_LOCATIONS: "filesystem:./migrations/"
+      FLYWAY_CONFIG_FILES: "filesystem:./conf/flyway.toml"
+ 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Flyway Migration
-      run: |
-        "C:\Program Files\Red Gate\Flyway Desktop\flyway\flyway" migrate -outOfOrder=true -configFiles=conf/flyway.toml
-
-    - name: Check Flyway Migration Status
-      run: echo "Flyway migration successful!"
-
-    - name: Cleanup
-      run: Remove-Item -Path $Env:TEMP\* -Recurse -Force
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Flyway CLI
+        run: |
+          sudo apt update
+          sudo apt install -y default-jre
+          wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/10.7.2/flyway-commandline-10.7.2-linux-x64.tar.gz | tar xvz
+          sudo ln -s $(pwd)/flyway-10.7.2/flyway /usr/local/bin/flyway
+ 
+      - name: Flyway repair
+        run: |
+          flyway repair
+      - name: Flyway Migrate 
+        run: |
+          flyway migrate \
+             -url="${FLYWAY_URL}" \
+            -user="${FLYWAY_USER}" \
+            -password="${FLYWAY_PASSWORD}" \
+            -configFiles="${FLYWAY_CONFIG_FILES}"
