@@ -8,7 +8,7 @@ pipeline {
             }
         }
 
-        stage('Flyway Migtion') {
+        stage('Flyway Migration') {
             steps {
                 script {
                     // Use the full path to the flyway executable
