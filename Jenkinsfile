@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     // Use the full path to the flyway executable
-                    bat '"C:\\Program Files\\Red Gate\\Flyway Desktop\\flyway\\flyway" migrate -configFiles=conf/flyway.toml'
+                    bat '"C:\\Program Files\\Red Gate\\Flyway Desktop\\flyway\\flyway" migrate -outOfOrder=true -configFiles=conf/flyway.toml'
                 }
             }
         }
