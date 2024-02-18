@@ -2,15 +2,13 @@
 
 **Description:**
 
-KindnessKettle is a heartwarming platform where generosity meets simplicity. It's your go-to space for connecting through food donations. Picture it as a virtual kettle, simmering with the warmth of shared kindness. Users effortlessly contribute to the collective pot by sharing surplus meals, linking directly with local charities for quick and convenient pickups. With KindnessKettle, making a difference is as easy as a shared meal – a simple act that ripples into a sea of goodwill, one kettle at a time. Join us in the joy of giving, where every contribution adds to the comforting brew of community care.
-
-
+KindnessKettle is a heartwarming platform where generosity meets simplicity. It's your go-to space for connecting through food donations. Imagine it as a virtual kettle, simmering with the warmth of shared kindness. Users effortlessly contribute to the collective pot by sharing surplus meals, linking directly with local charities for quick and convenient pickups. With KindnessKettle, making a difference is as easy as a shared meal – a simple act that ripples into a sea of goodwill, one kettle at a time. Join us in the joy of giving, where every contribution adds to the comforting brew of community care.
 
 # AWS CloudFormation Deployment and Flyway Configuration for RDS Instance
 
-This documentation provides step-by-step instructions for deploying an RDS (Relational Database Service) instance with SQL Server using AWS CloudFormation and configuring Flyway for database migrations.
+This documentation provides step-by-step instructions for deploying an RDS (Relational Database Service) instance with SQL Server using AWS CloudFormation and configuring Flyway for database migrations. Additionally, it covers setting up GitHub Actions for continuous integration and continuous deployment (CI/CD).
 
-## AWS CloudFormation Deployment
+# AWS CloudFormation Deployment
 
 ### Prerequisites
 
@@ -82,7 +80,7 @@ aws cloudformation delete-stack --stack-name <stack-name>
 - Adjust the security group settings based on your requirements.
 - Review the CloudFormation events and logs for detailed information.
 
-## Flyway Installation and Configuration
+# Flyway Installation and Configuration
 
 ### Prerequisites
 
@@ -164,6 +162,69 @@ This command provides details about applied and pending migrations.
   ./flyway validate
   ```
 
-### Conclusion
+# GitHub Actions for Flyway Database Migrations
 
-You have successfully installed and configured Flyway to migrate SQL files to your connected RDS instance database using the `flyway.toml` configuration file. Adjust the migration scripts and repeat the migration process as needed for your database changes.
+
+
+## Workflow Overview
+
+This GitHub Actions workflow automates database migrations using Flyway. It allows you to manage database schema changes effortlessly.
+
+## Workflow Script
+
+```yaml
+name: flyway
+ 
+on:
+  push:
+    branches: 
+      - main
+ 
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+ 
+    env:
+      FLYWAY_USER: ${{ secrets.DB_BUILD_USERNAME }}
+      FLYWAY_PASSWORD: ${{ secrets.DB_BUILD_PASSWORD }}
+      FLYWAY_URL: ${{ secrets.DB_BUILD_URL }}
+      FLYWAY_CLEAN_DISABLED: false
+      FLYWAY_LOCATIONS: "filesystem:./migrations/"
+      FLYWAY_CONFIG_FILES: "filesystem:./conf/flyway.toml"
+ 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Flyway CLI
+        run: |
+          sudo apt update
+          sudo apt install -y default-jre
+          wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/7.9.1/flyway-commandline-7.9.1-linux-x64.tar.gz | tar xvz
+          sudo ln -s $(pwd)/flyway-7.9.1/flyway /usr/local/bin/flyway
+ 
+      - name: Flyway Repair
+        run: |
+          flyway repair
+      - name: Flyway Migrate 
+        run: |
+          flyway migrate \
+             -url="${FLYWAY_URL}" \
+            -user="${FLYWAY_USER}" \
+            -password="${FLYWAY_PASSWORD}" \
+            -configFiles="${FLYWAY_CONFIG_FILES}"
+```
+
+## Workflow Steps
+
+1. **Checkout code:** This step checks out the repository code.
+
+2. **Setup Flyway CLI:** Installs the required dependencies and sets up Flyway CLI.
+
+3. **Flyway Repair:** Repairs the metadata table if necessary.
+
+4. **Flyway Migrate:** Executes database migrations using Flyway.
+
+## Conclusion
+
+You now have a comprehensive setup covering KindnessKettle, AWS CloudFormation deployment, Flyway installation, and GitHub Actions for automating database migrations.
+
