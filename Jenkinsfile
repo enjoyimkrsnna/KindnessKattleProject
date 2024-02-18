@@ -2,28 +2,29 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                echo 'Building the application...'
-                // Add build commands or scripts here
-                // Example: sh 'mvn clean install'
+             
+                checkout scm
             }
         }
 
-        stage('Test') {
+        stage('Flyway Migration') {
             steps {
-                echo 'Running tests...'
-                // Add test commands or scripts here
-                // Example: sh 'mvn test'
+                script {
+                   
+                    sh "flyway migrate -configFiles=conf/flyway.toml"
+                }
             }
         }
+    }
 
-        stage('Deploy') {
-            steps {
-                echo 'Deploying the application...'
-                // Add deployment commands or scripts here
-                // Example: sh 'deploy.sh'
-            }
+    post {
+        success {
+            echo 'Flyway migration successful!'
+        }
+        failure {
+            echo 'Flyway migration failed!'
         }
     }
 }
