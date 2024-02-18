@@ -18,6 +18,6 @@ BEGIN
     END
     ELSE
     BEGIN
-        PRINT 'Username already exists. Please choose a different username.';
+        PRINT 'Username already exists. Please choose a different username hello.';
     END
 END;
