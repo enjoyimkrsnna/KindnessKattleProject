@@ -4,7 +4,6 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-             
                 checkout scm
             }
         }
@@ -12,8 +11,8 @@ pipeline {
         stage('Flyway Migration') {
             steps {
                 script {
-                   
-                    sh "flyway migrate -configFiles=conf/flyway.toml"
+                    // Use the full path to the flyway executable
+                    bat '"C:\\Program Files\\Red Gate\\Flyway Desktop\\flyway\\flyway" migrate -configFiles=conf/flyway.toml'
                 }
             }
         }
