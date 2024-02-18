@@ -1,6 +1,9 @@
 [flyway]
 locations = ["filesystem:migrations"]
- 
+
+[flyway.placeholders]
+schema = "dbo"
+
 [environments.default]
 locations = ["filesystem:migrations"]
 # Update the URL to connect to your MSSQL server
