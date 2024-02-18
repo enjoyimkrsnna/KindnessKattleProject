@@ -2,7 +2,7 @@
 locations = ["filesystem:migrations"]
 
 [flyway.placeholders]
-schema=dbo
+schema = "dbo"
 
 [environments.default]
 locations = ["filesystem:migrations"]
