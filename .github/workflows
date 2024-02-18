@@ -1,0 +1,24 @@
+name: Flyway Migration
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Flyway Migration
+      run: |
+        "C:\Program Files\Red Gate\Flyway Desktop\flyway\flyway" migrate -outOfOrder=true -configFiles=conf/flyway.toml
+
+    - name: Check Flyway Migration Status
+      run: echo "Flyway migration successful!"
+
+    - name: Cleanup
+      run: Remove-Item -Path $Env:TEMP\* -Recurse -Force
