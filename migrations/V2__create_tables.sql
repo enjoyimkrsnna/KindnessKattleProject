@@ -1,8 +1,5 @@
--- Placeholder for schema or other variables
-${schema := "dbo"}
-
 -- Users Table
-CREATE TABLE ${schema}.UserAccounts (
+CREATE TABLE dbo.UserAccounts (
     UserID INT PRIMARY KEY IDENTITY,
     FirstName VARCHAR(50) NOT NULL,
     LastName VARCHAR(50) NOT NULL,
@@ -14,7 +11,7 @@ CREATE TABLE ${schema}.UserAccounts (
 );
 
 -- Address Table
-CREATE TABLE ${schema}.Addresses (
+CREATE TABLE dbo.Addresses (
     AddressID INT PRIMARY KEY IDENTITY,
     AddressLine NVARCHAR(255) NOT NULL,
     City NVARCHAR(50) NOT NULL,
@@ -24,7 +21,7 @@ CREATE TABLE ${schema}.Addresses (
 );
 
 -- FoodDonationPost Table
-CREATE TABLE ${schema}.DonationPosts (
+CREATE TABLE dbo.DonationPosts (
     PostID INT PRIMARY KEY IDENTITY,
     UserID INT,
     AddressID INT,
@@ -33,72 +30,72 @@ CREATE TABLE ${schema}.DonationPosts (
     TimeAvailable DATETIME,
     IsPostActive BIT NOT NULL DEFAULT 1,
     CreatedAt DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (UserID) REFERENCES ${schema}.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (AddressID) REFERENCES ${schema}.Addresses(AddressID) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (UserID) REFERENCES dbo.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (AddressID) REFERENCES dbo.Addresses(AddressID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- PickupStatus Table
-CREATE TABLE ${schema}.PickupStatuses (
+CREATE TABLE dbo.PickupStatuses (
     PickupStatusID INT PRIMARY KEY IDENTITY,
     PostID INT,
     PickedUpByUserID INT,
     PickupDateTime DATETIME,
-    FOREIGN KEY (PostID) REFERENCES ${schema}.DonationPosts(PostID) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (PickedUpByUserID) REFERENCES ${schema}.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (PostID) REFERENCES dbo.DonationPosts(PostID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (PickedUpByUserID) REFERENCES dbo.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Conversation Table
-CREATE TABLE ${schema}.Conversations (
+CREATE TABLE dbo.Conversations (
     ConversationID INT PRIMARY KEY IDENTITY,
     User1ID INT,
     User2ID INT,
     UNIQUE (User1ID, User2ID),
-    FOREIGN KEY (User1ID) REFERENCES ${schema}.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (User2ID) REFERENCES ${schema}.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (User1ID) REFERENCES dbo.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (User2ID) REFERENCES dbo.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- ChatMessage Table
-CREATE TABLE ${schema}.ChatMessages (
+CREATE TABLE dbo.ChatMessages (
     MessageID INT PRIMARY KEY IDENTITY,
     ConversationID INT,
     SenderUserID INT,
     ReceiverUserID INT,
     MessageContent NVARCHAR(MAX),
     MessageTimestamp DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (ConversationID) REFERENCES ${schema}.Conversations(ConversationID) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (SenderUserID) REFERENCES ${schema}.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (ReceiverUserID) REFERENCES ${schema}.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (ConversationID) REFERENCES dbo.Conversations(ConversationID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (SenderUserID) REFERENCES dbo.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (ReceiverUserID) REFERENCES dbo.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Like Table
-CREATE TABLE ${schema}.Likes (
+CREATE TABLE dbo.Likes (
     LikeID INT PRIMARY KEY IDENTITY,
     UserID INT,
     PostID INT,
     LikeDateTime DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (UserID) REFERENCES ${schema}.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (PostID) REFERENCES ${schema}.DonationPosts(PostID) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (UserID) REFERENCES dbo.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (PostID) REFERENCES dbo.DonationPosts(PostID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Comment Table
-CREATE TABLE ${schema}.Comments (
+CREATE TABLE dbo.Comments (
     CommentID INT PRIMARY KEY IDENTITY,
     UserID INT,
     PostID INT,
     CommentContent NVARCHAR(MAX),
     CommentDateTime DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (UserID) REFERENCES ${schema}.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (PostID) REFERENCES ${schema}.DonationPosts(PostID) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (UserID) REFERENCES dbo.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (PostID) REFERENCES dbo.DonationPosts(PostID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- FeedbackRating Table
-CREATE TABLE ${schema}.FeedbackRatings (
+CREATE TABLE dbo.FeedbackRatings (
     FeedbackRatingID INT PRIMARY KEY IDENTITY,
     RatedUserID INT,
     RatingUserID INT,
     FeedbackContent NVARCHAR(MAX),
     Rating INT,
     RatingDateTime DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (RatedUserID) REFERENCES ${schema}.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (RatingUserID) REFERENCES ${schema}.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (RatedUserID) REFERENCES dbo.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (RatingUserID) REFERENCES dbo.UserAccounts(UserID) ON DELETE CASCADE ON UPDATE CASCADE
 );
