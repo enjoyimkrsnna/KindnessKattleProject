@@ -2,11 +2,10 @@
 locations = ["filesystem:migrations"]
 
 [flyway.placeholders]
-schema = "dbo"
+schema=dbo
 
 [environments.default]
 locations = ["filesystem:migrations"]
-# Update the URL to connect to your MSSQL server
 url = "jdbc:sqlserver://kindnesskattledb.chevdymucho3.eu-west-1.rds.amazonaws.com:1433;authentication=sqlPassword;databaseName=dbkindkattle;encrypt=true;trustServerCertificate=true"
 user = "admin"
 password = "imkrsnna"
