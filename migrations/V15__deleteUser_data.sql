@@ -1,2 +1,2 @@
 DELETE FROM UserAccounts
-WHERE FirstName = 'Ajay';
+WHERE FirstName = 'John Doe';
