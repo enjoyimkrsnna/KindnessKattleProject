@@ -6,7 +6,7 @@ KindnessKettle is a heartwarming platform where generosity meets simplicity. It'
 
 # AWS CloudFormation Deployment and Flyway Configuration for RDS Instance
 
-This documentation provides step-by-step instructions for deploying an RDS (Relational Database Service) instance with SQL Server using AWS CloudFormation and configuring Flyway for database migrations. Additionally, it covers setting up GitHub Actions for continuous integration and continuous deployment (CI/CD).
+This documentation provides step-by-step instructions for deploying an RDS (Relational Database Service) instance with SQL Server using AWS CloudFormation and configuring Flyway for database migrations. Additionally, it covers setting up GitHub Actions for continuous integration and continuous deployment (CI/CD)..
 
 # AWS CloudFormation Deployment
 
