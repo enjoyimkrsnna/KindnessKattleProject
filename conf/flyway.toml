@@ -3,6 +3,10 @@ locations = ["filesystem:migrations"]
 
 [environments.default]
 locations = ["filesystem:migrations"]
-url = "jdbc:sqlserver://kindnesskattledb.chevdymucho3.eu-west-1.rds.amazonaws.com:1433;authentication=sqlPassword;databaseName=dbkindkattle;encrypt=true;trustServerCertificate=true"
-user = "admin"
-password = "imkrsnna"
+url = ${{ secrets.DB_BUILD_URL }}
+user =  ${{ secrets.DB_BUILD_USERNAME }}
+password = ${{ secrets.DB_BUILD_PASSWORD }}
+
+
+
+ 
