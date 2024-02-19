@@ -1,4 +1,4 @@
-ALTER PROCEDURE InsertAddressAndDonationPost
+CREATE PROCEDURE InsertAddressAndDonationPost
 
     @AddressLine NVARCHAR(255),
 

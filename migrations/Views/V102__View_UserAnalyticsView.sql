@@ -1,3 +1,4 @@
+
 CREATE VIEW UserAnalyticsView AS
 SELECT
     u.UserID,
@@ -21,5 +22,3 @@ LEFT JOIN
     [dbo].[FeedbackRatings] fr2 ON u.UserID = fr2.RatingUserID
 GROUP BY
     u.UserID, u.Username, u.EmailAddress, u.IsActive;
-
--- select * from UserAnalyticsView; // for executing the view
