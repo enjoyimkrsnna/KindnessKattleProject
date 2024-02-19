@@ -164,11 +164,9 @@ This command provides details about applied and pending migrations.
 
 # GitHub Actions for Flyway Database Migrations
 
-
-
 ## Workflow Overview
 
-This GitHub Actions workflow automates database migrations using Flyway. It allows you to manage database schema changes effortlessly.
+This GitHub Actions workflow automates database migrations using Flyway, enabling you to effortlessly manage database schema changes.
 
 ## Workflow Script
 
@@ -220,11 +218,20 @@ jobs:
 
 2. **Setup Flyway CLI:** Installs the required dependencies and sets up Flyway CLI.
 
-3. **Flyway Repair:** Repairs the metadata table if necessary.
+3. **Create Secrets in GitHub:**
+   - Navigate to your GitHub repository.
+   - Go to the "Settings" tab.
+   - In the left sidebar, click on "Secrets."
+   - Click on "New repository secret" and add the following secrets:
+      - `DB_BUILD_USERNAME`: Your database username.
+      - `DB_BUILD_PASSWORD`: Your database password.
+      - `DB_BUILD_URL`: Your database URL.
 
-4. **Flyway Migrate:** Executes database migrations using Flyway.
+4. **Flyway Repair:** Repairs the metadata table if necessary.
+
+5. **Flyway Migrate:** Executes database migrations using Flyway.
 
 ## Conclusion
 
-You now have a comprehensive setup covering KindnessKettle, AWS CloudFormation deployment, Flyway installation, and GitHub Actions for automating database migrations.
+You now have a comprehensive setup covering KindnessKettle, AWS CloudFormation deployment, Flyway installation, and GitHub Actions for automating database migrations, with the added step of creating necessary secrets in GitHub Actions for secure storage of sensitive information.
 
