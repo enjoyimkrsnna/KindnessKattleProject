@@ -6,7 +6,7 @@ locations = ["filesystem:migrations"]
 url = ${{ secrets.DB_BUILD_URL }}
 user =  ${{ secrets.DB_BUILD_USERNAME }}
 password = ${{ secrets.DB_BUILD_PASSWORD }}
-
+flyway.cleanDisabled=false
 
 
  
