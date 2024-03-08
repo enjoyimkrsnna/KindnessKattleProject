@@ -34,7 +34,7 @@ CREATE TABLE food_types (
   food_type VARCHAR(20) NOT NULL
 );
  
-CREATE TABLE address (
+CREATE TABLE addresses (
   address_id INT PRIMARY KEY IDENTITY(1, 1),
   address_line NVARCHAR(255) NOT NULL,
   city_id INT NOT NULL,
