@@ -54,7 +54,7 @@ CREATE TABLE donation_posts (
   created_at DATETIME DEFAULT (GETDATE()),
   FOREIGN KEY (user_id) REFERENCES user_accounts (user_id),
   FOREIGN KEY (food_type_id) REFERENCES food_types (food_id),
-  FOREIGN KEY (address_id) REFERENCES addresses (address_id)
+  FOREIGN KEY (address_id) REFERENCES address (address_id)
 );
  
 CREATE TABLE pickup_completed (
