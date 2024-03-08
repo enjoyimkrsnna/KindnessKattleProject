@@ -31,13 +31,6 @@ jobs:
         run: |
           flyway repair
 
-      - name: Flyway Clean
-        run: |
-          flyway clean -url="${FLYWAY_URL}" \
-            -user="${FLYWAY_USER}" \
-            -password="${FLYWAY_PASSWORD}" \
-            -configFiles="${FLYWAY_CONFIG_FILES}"
-
       - name: Flyway Migrate
         run: |
           flyway migrate -outOfOrder=true \
