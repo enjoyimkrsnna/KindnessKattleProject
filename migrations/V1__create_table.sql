@@ -39,7 +39,7 @@ CREATE TABLE address (
   address_line NVARCHAR(255) NOT NULL,
   pincode VARCHAR(10) NOT NULL,
   longitude DECIMAL(9,6),
-  latitude DECIMAL(8,6),
+  latitude DECIMAL(8,6)
 );
  
 CREATE TABLE donation_posts (
