@@ -37,10 +37,9 @@ CREATE TABLE food_types (
 CREATE TABLE address (
   address_id INT PRIMARY KEY IDENTITY(1, 1),
   address_line NVARCHAR(255) NOT NULL,
-  city_id INT NOT NULL,
+  pincode VARCHAR(10) NOT NULL,
   longitude DECIMAL(9,6),
   latitude DECIMAL(8,6),
-  FOREIGN KEY (city_id) REFERENCES city (city_id)
 );
  
 CREATE TABLE donation_posts (
