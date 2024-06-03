@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Resources:
+  EC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: 'ami-0fc3317b37c1269d3'
+      InstanceType: 't2.micro'
+      KeyName: 'imkrsnakey'  
+      SubnetId: 'subnet-03b85a9d98bded20e'
+      Tags:
+        - Key: 'Name'
+          Value: 'ec2_instance'
+        - Key: 'owner'
+          Value: 'krishna.singh@bbd.co.za'
+
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: 'unique-kindnesskettle-image'  
+
+Outputs:
+  InstanceId:
+    Description: 'The ID of the created EC2 instance'
+    Value: !Ref 'EC2Instance'
+  S3BucketName:
+    Description: 'The name of the created S3 bucket'
+    Value: !Ref 'S3Bucket'
